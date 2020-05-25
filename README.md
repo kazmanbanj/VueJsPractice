@@ -1,1 +1,1 @@
-#vueJs conditionals
+#vue.Js component
