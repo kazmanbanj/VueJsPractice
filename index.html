@@ -3,71 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practicing VueJS</title>
+    <title>vueJs instance</title>
 </head>
 <body>
     <div id="app">
+        <h1>{{title}}</h1>
+        <h1 ref="heading">{{title}}</h1>
+        <button v-on:click="show" ref="myButton">Show paragraph</button>
+        <p v-if="showParagraph = !showParagraph">This is not always visible</p>
 
-        <!-- comment out -->
-            <p v-if="show">You can see me!</p>
-            <p v-else>Now you see me!</p>
-            <template v-if="show">
-                <h1 v-if>Heading</h1>
-                <p>inside a template</p>
-            </template>
-            <p v-show="show">Do you also see me?</p>
-            <button @click="show = !show">Switch</button>
-        <!-- comment outs stops -->
-
-        <!-- comment out-->
-            <hr>
-            <ul>
-                <li v-for="(ingred, index) in ingredients" :key="ingred">{{ ingred }} ({{ index }})</li>
-            </ul>
-            <hr>
-            <template v-for="(ingred, index) in ingredients">
-                <h1>{{ ingred }}</h1>
-                <p>{{ index }}</p>
-            </template>
-            <hr>
-
-            <ul>
-                <li v-for="person in persons">{{ person.name }}</li>
-                <hr>
-                <li v-for="person in persons">
-                    <span v-for="value in person">{{ value }}</span>{{ person.name }}
-                </li>
-                <hr>
-                <li v-for="person in persons">
-                    <div v-for="(value, key, index) in person">{{ key }}: {{ value }} ({{index}})</div>
-                </li>
-                
-            </ul>
-            <button @click="ingredients.push('spices')">Add New</button><br>
-            <span v-for="n in 10">{{n}} <br></span>
-            
-        <!-- comment outs stops -->
-
-            
-
+        <button @click="title = 'Changed the text here by updating the title'">Update Title</button>
+        <button @click="destroy">Destroy</button>
     </div>
+
+
+    <div id="app2">
+        <h1>{{title}}</h1>
+        <button @click="onChange">Change something in vue 1</button>
+        
+        <p v-if="showParagraph = !showParagraph">This is not always visible</p>
+        
+        <hello></hello>
+        <hello></hello>
+        <hello></hello>
+    </div>
+
+    <div id="app3">
+                
+    </div>
+
     
+
     <script src="vue.js"></script>
     <script>
-        new Vue({
-            el: '#app',
-            data: {
 
-                // comment out
-                show: true,
-                ingredients: ['meat', 'fruit', 'cookies'],
-                persons: [
-                    {name: 'Max', age: 27, color: 'red'},
-                    {name: 'Anna', age: 'unknown', color: 'blue'},
-                ]
-                // comment out stops
+        // replacing every hello element with the template
+        Vue.component('hello', {
+            template: '<h1>Hello for the vue component</h1>'
+        });
+
+        var vm1 = new Vue({
+            // el: '#app',
+            data: {
+                title: 'The VueJS instance',
+                showParagraph: false,
+            },
+
+            beforeCreate: function() {
+
+            },
+            created: function() {
+
+            },
+            beforeMount: function() {
+
+            },
+            mounted: function() {
+
+            },
+            beforeUpdate: function() {
+
+            },
+            Updated: function() {
+
+            },
+            beforeDestroy: function() {
+
+            },
+            destroyed: function() {
+
+            },
+
+            methods: {
+                show: function() {
+                    this.paragraph = true;
+                    this.updateTitle('The VueJS Instance (updated)');
+                    this.$refs.myButton.innerText = 'Show this Ref Button';
+                },
+                updateTitle: function(title) {
+                    this.title = title;
+                },
+                destroy: function() {
+                    this.$destroy();
+                }
+            },
+            computed: {
+                lowercaseTitle: function() {
+                return this.title.toLowerCase();
+                }
+            },
+            watch: {
+                title: function(value) {
+                alert('Title changed, new value: ' + value);
+                }
             }
         });
+
+        // either el or $mount works
+        vm1.$mount('#app');
+
+        vm1.$refs.heading.innerText = "Show ref heading";
+
+        setTimeout(function() {
+            vm1.title = 'changed by timer';
+            vm1.show();
+        }, 7000);
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                title: 'The second instance',
+            },
+            methods: {
+                onChange: function() {
+                    vm1.title = 'changed';
+                }
+            }
+        });
+
+        var vm3 = new Vue({
+            template: '<h1>Hello! from vm3</h1>'
+        });
+
+        // vm3.$mount('#app3');
+
+        //or
+
+        vm3.$mount();
+        document.getElementById('app3').appendChild(vm3.$el);
     </script>
 </body>
 </html>
