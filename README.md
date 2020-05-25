@@ -1,1 +1,1 @@
-#Practices on vueJs conditionals
+#vueJs conditionals
