@@ -1,1 +1,1 @@
-#vueJs instance
+#using vuejS to interact with the DOM
