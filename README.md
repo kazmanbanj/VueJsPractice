@@ -1,1 +1,1 @@
-#vueJs conditionals
+#vueJs instance
