@@ -3,70 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practicing VueJS</title>
+    <title>Vue components</title>
 </head>
 <body>
+
     <div id="app">
-
-        <!-- comment out -->
-            <p v-if="show">You can see me!</p>
-            <p v-else>Now you see me!</p>
-            <template v-if="show">
-                <h1 v-if>Heading</h1>
-                <p>inside a template</p>
-            </template>
-            <p v-show="show">Do you also see me?</p>
-            <button @click="show = !show">Switch</button>
-        <!-- comment outs stops -->
-
-        <!-- comment out-->
-            <hr>
-            <ul>
-                <li v-for="(ingred, index) in ingredients" :key="ingred">{{ ingred }} ({{ index }})</li>
-            </ul>
-            <hr>
-            <template v-for="(ingred, index) in ingredients">
-                <h1>{{ ingred }}</h1>
-                <p>{{ index }}</p>
-            </template>
-            <hr>
-
-            <ul>
-                <li v-for="person in persons">{{ person.name }}</li>
-                <hr>
-                <li v-for="person in persons">
-                    <span v-for="value in person">{{ value }}</span>{{ person.name }}
-                </li>
-                <hr>
-                <li v-for="person in persons">
-                    <div v-for="(value, key, index) in person">{{ key }}: {{ value }} ({{index}})</div>
-                </li>
-                
-            </ul>
-            <button @click="ingredients.push('spices')">Add New</button><br>
-            <span v-for="n in 10">{{n}} <br></span>
-            
-        <!-- comment outs stops -->
-
-            
-
+        <my-cmp></my-cmp>
+        <hr>
+        <my-cmp></my-cmp>
+        <hr>
+        <my-cmp></my-cmp>
+        <hr>
+        <my-cmp></my-cmp>
+        <hr>
     </div>
-    
+
+    <hr>
+    <div id="app2">
+        <my-cmp></my-cmp>
+        <hr>
+        <my-cmp></my-cmp>
+        <hr>
+    </div>
+
     <script src="vue.js"></script>
+
     <script>
+        // var data = {status: 'Critical'};
+        // Vue.component('my-cmp', {}) 
+
+        Vue.component('my-cmp', {
+            data: function() {
+                return {
+                    status: 'Critical'
+                };
+            },
+            template: '<p>Server Status: {{ status }} (<button @click="changeStatus">Change</button>)</p>',
+            methods: {
+                changeStatus: function() {
+                    this.status = 'Normal';
+                }
+            }
+        }),
+
         new Vue({
             el: '#app',
-            data: {
+            // data: {
+            //     status: 'Critical'
+            // },
+            // template: '<p>Server Status: {{status}}</p>'
+        })
 
-                // comment out
-                show: true,
-                ingredients: ['meat', 'fruit', 'cookies'],
-                persons: [
-                    {name: 'Max', age: 27, color: 'red'},
-                    {name: 'Anna', age: 'unknown', color: 'blue'},
-                ]
-                // comment out stops
-            }
+        new Vue({
+            el: '#app2',
+            
         });
     </script>
 </body>
