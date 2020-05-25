@@ -1,136 +1,208 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vueJs instance</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>VueJS</title>
+	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+	
+	<style>
+		.demo {
+			width: 100px;
+			height: 100px;
+			background-color: grey;
+			display: inline-block;
+			margin: 18px;
+		}
+
+		.red {
+			background-color: red;
+		}
+
+		.green {
+			background-color: green;
+		}
+
+		.blue {
+			background-color: blue;
+		}
+
+		.demo2 {
+			width: 100px;
+			height: 100px;
+			background-color: grey;
+			display: inline-block;
+			margin: 18px;
+			border: 2px solid black;
+		}
+	</style>
+	
 </head>
 <body>
-    <div id="app">
-        <h1>{{title}}</h1>
-        <h1 ref="heading">{{title}}</h1>
-        <button v-on:click="show" ref="myButton">Show paragraph</button>
-        <p v-if="showParagraph = !showParagraph">This is not always visible</p>
-
-        <button @click="title = 'Changed the text here by updating the title'">Update Title</button>
-        <button @click="destroy">Destroy</button>
-    </div>
+	<div id="app">
+		<!-- comment out -->
+		<input type="text" v-on:input="changeTitle2">
+		<p>{{ title2 }}</p>
+		  
 
 
-    <div id="app2">
-        <h1>{{title}}</h1>
-        <button @click="onChange">Change something in vue 1</button>
-        
-        <p v-if="showParagraph = !showParagraph">This is not always visible</p>
-        
-        <hello></hello>
-        <hello></hello>
-        <hello></hello>
-    </div>
+		<input type="text" v-on:input="changeTitle">
 
-    <div id="app3">
-                
-    </div>
+		<h1 v-once>{{ title }}</h1>
+		<p>{{ sayHello() }} - <a v-bind:href="link">google</a></p>
+		
+		<p v-html="finishedLink"></p>
 
-    
+		<button v-on:click="counter++">Click me</button>
+		<button v-on:click="counter--">Decrease me</button>
+		<button v-on:click="secondCounter++">increase second me</button>
+		<button v-on:click="counter++">Increase</button>
+		<p>Counter: {{ counter }} | {{ secondCounter }}</p>
+		<p>Result: {{ result() }} | {{ output }}</p>
 
-    <script src="vue.js"></script>
-    <script>
+		<p v-on:mousemove="updateCoordinate">
+			Coordinates: {{ x }} / {{ y }}
+			- <span v-on:mousemove.stop="dummy">STOP HERE</span>
+		</p>
+		<input type="text" v-on:keyup.enter.space="alertMe">
+		<p>Type anything and add space</p><br>
 
-        // replacing every hello element with the template
-        Vue.component('hello', {
-            template: '<h1>Hello for the vue component</h1>'
-        });
 
-        var vm1 = new Vue({
-            // el: '#app',
-            data: {
-                title: 'The VueJS instance',
-                showParagraph: false,
-            },
 
-            beforeCreate: function() {
+		<input type="text" v-model="name">
+		<p>{{name}}</p>
 
-            },
-            created: function() {
 
-            },
-            beforeMount: function() {
 
-            },
-            mounted: function() {
+		<button @click="changeLink">Click to change link</button>
+		<a :href="link">link</a>
 
-            },
-            beforeUpdate: function() {
+		<!-- comment out stopss -->
 
-            },
-            Updated: function() {
 
-            },
-            beforeDestroy: function() {
+		<div class="demo" @click="attachRed = !attachRed" :class="{red: attachRed}"></div>
+		<div class="demo" @click="attachGreen = !attachGreen" :class="{green: attachGreen}"></div>
+		<div class="demo" @click="attachBlue = !attachBlue" :class="{blue: attachBlue}"></div>
+		<div class="demo" :class="[color, {red: attachRed}]"></div>
+		<hr>
+		<input type="text" v-model="color">
 
-            },
-            destroyed: function() {
+		<!-- setting styles dynamically without css classes -->
+		<hr>
+		<div class="demo2" :style="{backgroundColor: color}"></div>
+		<div class="demo2" :style="myStyle"></div>
+		<div class="demo2" :style="[myStyle, {height: width + 'px'}]"></div>
+		<div class="demo2"></div>
+		<hr>
+		<input type="text" v-model="color">
+		<input type="text" v-model="width">
+	</div>
+	
 
-            },
+	<script src="vue.js"></script>
+	<script>
+		new Vue({
+		el: '#app',
+		data: {
+			//comment out
 
-            methods: {
-                show: function() {
-                    this.paragraph = true;
-                    this.updateTitle('The VueJS Instance (updated)');
-                    this.$refs.myButton.innerText = 'Show this Ref Button';
-                },
-                updateTitle: function(title) {
-                    this.title = title;
-                },
-                destroy: function() {
-                    this.$destroy();
-                }
-            },
-            computed: {
-                lowercaseTitle: function() {
-                return this.title.toLowerCase();
-                }
-            },
-            watch: {
-                title: function(value) {
-                alert('Title changed, new value: ' + value);
-                }
-            }
-        });
+			counter: 0,
+			secondCounter: 0,
+			result: '',
+			x: 0,
+			y: 0,
+			name: 'max',
+			secondCounter: 0,
+			title: 'Hello World!',
+			title2: 'Hello Beautiful World!',
+			link: 'http://google.com',
+			finishedLink: '<a href="http://google.com">google</a>',
 
-        // either el or $mount works
-        vm1.$mount('#app');
+			//comment out stopss
 
-        vm1.$refs.heading.innerText = "Show ref heading";
+			attachRed: false,
+			attachGreen: false,
+			attachBlue: false,
+			color: 'green',
+			width: 100
+		},
+		computed: {
 
-        setTimeout(function() {
-            vm1.title = 'changed by timer';
-            vm1.show();
-        }, 7000);
+			//comment out
 
-        var vm2 = new Vue({
-            el: '#app2',
-            data: {
-                title: 'The second instance',
-            },
-            methods: {
-                onChange: function() {
-                    vm1.title = 'changed';
-                }
-            }
-        });
+			output: function() {
+				return this.counter > 5 ? 'Greater 5' : 'Smaller than 5';
+			},
 
-        var vm3 = new Vue({
-            template: '<h1>Hello! from vm3</h1>'
-        });
+			//comment out stopss
 
-        // vm3.$mount('#app3');
+			myStyle: function() {
+				return {
+					backgroundColor: this.color,
+					width: this.width + 'px'
+				}
+			}
+		},
+		watch: {
 
-        //or
+			//comment out
+			counter: function(value) {
+				var vn = this;
+				// setTimeout(function() {
+				// 	vn.counter = 0;
+				// }, 5000);
+			}
 
-        vm3.$mount();
-        document.getElementById('app3').appendChild(vm3.$el);
-    </script>
+			//comment out stopss
+		},
+		methods: {
+			//comment out 
+			changeTitle: function(event) {
+				this.title = event.target.value;
+			},
+			changeTitle2: function(event) {
+				this.title2 = event.target.value;
+			},
+			result: function() {
+				return this.counter > 5 ? 'Greater 5' : 'Smaller than 5';
+			},			
+			sayHello: function() {
+				this.title = 'Second Hello!';
+				return this.title;
+			},			
+			Increase: function(step, event) {
+				this.counter+= step;
+			},
+
+			Increase: function() {
+				this.counter++;
+				this.result = this.counter > 5 ? "Greater 5" : "less than 5"
+			},
+			Decrease: function() {
+				this.counter--;
+				this.result = this.counter > 5 ? "Greater 5" : "less than 5"
+			},
+
+			updateCoordinate: function(event) {
+				this.x = event.clientX;
+				this.y = event.clientY;
+			},
+			dummy: function(event) {
+				event.stopPropagation();
+			},
+			alertMe: function() {
+				alert('sendvalue');
+			},
+
+			//comment out stopss
+
+
+			changeLink: function() {
+				this.link = 'http://apple.com'
+			}
+		}
+		});
+	</script>
+
 </body>
 </html>

@@ -1,0 +1,28 @@
+.demo {
+    width: 100px;
+    height: 100px;
+    background-color: grey;
+    display: inline-block;
+    margin: 18px;
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.demo2 {
+    width: 100px;
+    height: 100px;
+    background-color: grey;
+    display: inline-block;
+    margin: 18px;
+    border: 2px solid black;
+}
